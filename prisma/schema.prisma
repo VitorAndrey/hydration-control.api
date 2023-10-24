@@ -16,6 +16,6 @@ model Test {
 }
 
 model Hydration {
-  date DateTime @id
+  date String @id
   mls  Int
 }
