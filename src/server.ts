@@ -29,6 +29,8 @@ app.post("/tests", async (req: Request, res: Response) => {
   }
 });
 
+app.get("");
+
 app.listen(port, () => {
   console.log(`Server Listening on port ${port}`);
 });
