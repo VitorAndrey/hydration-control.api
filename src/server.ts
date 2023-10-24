@@ -1,32 +1,20 @@
+const express = require("express");
+const cors = require("cors");
+
 import { prisma } from "./lib/prisma";
 import { Request, Response } from "express";
 
-const express = require("express");
 const app = express();
+app.use(cors());
+
 const port = 3333;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.get("/tests", async (req: Request, res: Response) => {
-  const tests = await prisma.test.findMany();
+app.get("/hydration", async (req: Request, res: Response) => {
+  const hydration = await prisma.hydration.findMany();
 
-  res.send(JSON.stringify(tests)).status(200);
-});
-
-app.post("/tests", async (req: Request, res: Response) => {
-  const { name } = req.body;
-
-  try {
-    const test = await prisma.test.create({
-      data: {
-        name,
-      },
-    });
-    res.send(JSON.stringify(test)).status(201);
-  } catch (error) {
-    res.send(error).status(500);
-  }
+  res.json(hydration);
 });
 
 app.post("/hydration", async (req: Request, res: Response) => {
@@ -53,7 +41,7 @@ app.post("/hydration", async (req: Request, res: Response) => {
         mls,
       },
     });
-    return res.end(JSON.stringify(newData));
+    return res.json(newData);
   }
 
   const newData = await prisma.hydration.update({
@@ -65,7 +53,7 @@ app.post("/hydration", async (req: Request, res: Response) => {
       mls: register[0].mls + mls,
     },
   });
-  return res.end(JSON.stringify(newData));
+  return res.json(newData);
 });
 
 app.listen(port, () => {
