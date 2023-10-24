@@ -1,4 +1,5 @@
 import { prisma } from "./lib/prisma";
+import { Request, Response } from "express";
 
 const express = require("express");
 const app = express();
@@ -7,13 +8,13 @@ const port = 3333;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/tests", async (req, res) => {
+app.get("/tests", async (req: Request, res: Response) => {
   const tests = await prisma.test.findMany();
 
   res.send(JSON.stringify(tests)).status(200);
 });
 
-app.post("/tests", async (req, res) => {
+app.post("/tests", async (req: Request, res: Response) => {
   const { name } = req.body;
 
   try {
