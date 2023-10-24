@@ -1,4 +1,4 @@
-import { prisma } from "./lib/prisma";
+import { prisma } from "./src/lib/prisma";
 import { Request, Response } from "express";
 
 const express = require("express");
@@ -28,8 +28,6 @@ app.post("/tests", async (req: Request, res: Response) => {
     res.send(error).status(500);
   }
 });
-
-app.get("");
 
 app.listen(port, () => {
   console.log(`Server Listening on port ${port}`);
